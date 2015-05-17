@@ -5,7 +5,6 @@ using namespace std;
 
 uint32_t bytes_to_int(char bytes[4]) {
 	uint32_t num;
-	printf("%d %d %d %d\n", bytes[0] & 0xFF, bytes[1] & 0xFF, bytes[2] & 0xFF, bytes[3] & 0xFF);
 	num = (((bytes[0] & 0xFF) << 24) | ((bytes[1] & 0xFF) << 16) | ((bytes[2] & 0xFF) << 8) | (bytes[3] & 0xFF));
 	return num;
 }
@@ -41,9 +40,6 @@ Image *read_dataset(string image_file_name, string label_file_name) {
 		image_file.read(image, Image::IMAGE_SIZE);
 
 		images[x].setImage(image);
-
-		//printf("\n\n\nImage\n\n\n");
-		//images[x].print();
 	}
 
 	image_file.close();
@@ -66,9 +62,6 @@ Image *read_dataset(string image_file_name, string label_file_name) {
 		uint32_t label = label_data & 0xFF;
 
 		images[x].setLabel(label);
-
-		printf("\n\n\nImage\n\n\n");
-		images[x].print();
 	}
 
 
