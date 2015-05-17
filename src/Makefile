@@ -1,7 +1,7 @@
 CFLAGS = -g
 export CFLAGS
 
-OBJ_FILES = main.o Reader.o Image.o NeuralNetwork.o Neuron.o HiddenNeuron.o InputNeuron.o OutputNeuron.o
+OBJ_FILES = main.o Reader.o Image.o NeuralNetwork.o Neuron.o HiddenNeuron.o InputNeuron.o OutputNeuron.o DummyNeuron.o
 
 .PHONY: $(OBJ_FILES)
 
@@ -39,6 +39,10 @@ InputNeuron.o:
 OutputNeuron.o:
 	$(MAKE) -C nn OutputNeuron.o
 	cp nn/OutputNeuron.o .
+
+DummyNeuron.o:
+	$(MAKE) -C nn DummyNeuron.o
+	cp nn/DummyNeuron.o .
 
 clean:
 	-find . -type f -name '*.o' -delete

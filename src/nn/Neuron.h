@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstdint>
 #include <vector>
+#include <math.h>
 
 #ifndef neuron_header
 
@@ -32,12 +33,12 @@ class Neuron {
 		/**
 		 * Set the neuron's previous layer
 		 */
-		void setPreviousLayer(std::vector <Neuron> previous_layer);
+		void setPreviousLayer(std::vector <Neuron> *previous_layer);
 
 	protected:
-		double *weights;
+		std::vector <double>weights;
 		double value;
-		std::vector <Neuron> previous_layer;
+		std::vector <Neuron> *previous_layer;
 };
 
 #define neuron_header
