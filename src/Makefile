@@ -41,5 +41,5 @@ OutputNeuron.o:
 	cp nn/OutputNeuron.o .
 
 clean:
-	-rm -rf *.o
+	-find . -type f -name '*.o' -delete
 	-rm classifier
