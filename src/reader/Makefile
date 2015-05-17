@@ -3,4 +3,3 @@
 
 clean:
 	-rm *.o
-	-rm reader

@@ -1,24 +1,28 @@
 CFLAGS = 
 export CFLAGS
 
-.PHONY: main.o reader.o image.o
+.PHONY: main.o Reader.o Image.o
 
-all: reader.o image.o main.o
-	g++ $(CFLAGS) -o classifier main.o reader.o image.o
+all: Reader.o Image.o main.o
+	g++ $(CFLAGS) -o classifier main.o Reader.o Image.o
 
-image.o:
-	$(MAKE) -C data image.o
-	cp data/image.o .
+Image.o:
+	$(MAKE) -C data Image.o
+	cp data/Image.o .
 
-reader.o:
-	$(MAKE) -C reader reader.o
-	cp reader/reader.o .
+Reader.o:
+	$(MAKE) -C reader Reader.o
+	cp reader/Reader.o .
 
 main.o:
 	$(MAKE) -C main main.o
 	cp main/main.o .
 
+nn.o:
+	$(MAKE) -C nn nn.o
+	cp nn/nn.o .
+
 clean:
 	-rm -rf *.o
-	-rm reader.o
-	-$(MAKE) -C reader clean
+	-rm Reader.o
+	-rm classifier
