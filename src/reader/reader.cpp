@@ -1,8 +1,14 @@
 #include "reader.h"
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
+int bytes_to_int(char bytes[4]) {
+	int num;
+	num = (bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3];
+	return num;
+}
 
 void read_image_file(string file_name) {
 	ifstream file;
@@ -19,7 +25,13 @@ void read_image_file(string file_name) {
 	char num_cols[4];
 
 	char image[784];
-	
+	file.read(magic_number, 4);
+	file.read(num_items, 4);
+	file.read(num_rows, 4);
+	file.read(num_cols, 4);
+	file.read(image, 784);
+
+	cout << bytes_to_int(num_rows) << endl;
 
 	file.close();
 }
@@ -31,7 +43,8 @@ void read_image_file(string file_name) {
 int main(int argc, char **argv) {
 	string file;
 	cout << "Enter file name: ";
-	cin >> file;
+	file = "../../data/train-images-idx3-ubyte";
+	//cin >> file;
 	read_image_file(file);
 
 	return 0;

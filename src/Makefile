@@ -1,13 +1,12 @@
 CFLAGS = 
 
-.PHONY: reader_target
+all: reader.o
 
-all: reader_target
-
-reader_target:
-	cd reader
-	$(MAKE) -C reader reader
+reader.o:
+	-$(MAKE) -C reader reader.o
+	-cp reader/reader.o .
 
 clean:
 	-rm -rf *.o
-	-rm reader/reader
+	-rm reader.o
+	-$(MAKE) -C reader clean
