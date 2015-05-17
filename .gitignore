@@ -31,3 +31,7 @@
 # Other stuff
 *~
 .DS_Store
+
+# Project specific
+src/reader/reader
+data
