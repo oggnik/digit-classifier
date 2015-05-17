@@ -5,6 +5,7 @@
 #include "InputNeuron.h"
 #include "HiddenNeuron.h"
 #include "OutputNeuron.h"
+#include "DummyNeuron.h"
 
 #ifndef neural_network_header
 

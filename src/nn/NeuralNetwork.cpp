@@ -27,6 +27,19 @@ NeuralNetwork::NeuralNetwork(int num_input_neurons, int num_hidden_neurons, int 
 	for (int i = 0; i < num_input_neurons; i++) {
 		network[0][i] = new InputNeuron;
 	}
+	network[0][num_input_neurons] = new DummyNeuron;
+
+	for (int i = 0; i < num_hidden_layers; i++) {
+		for (int j = 0; j < num_hidden_neurons; j++) {
+			network[i][j] = new HiddenNeuron;
+		}
+		network[i][num_hidden_neurons] = new DummyNeuron;
+	}
+
+	for (int i = 0; i < num_output_neurons; i++) {
+		network[num_hidden_layers + 1][i] = new OutputNeuron;
+	}
+	network[num_hidden_layers + 1][num_output_neurons] = new DummyNeuron;
 }
 
 /**
@@ -43,9 +56,7 @@ NeuralNetwork::~NeuralNetwork() {
 /**
  * Compute the output of the network with the given inputs
  */
-std::vector <double> NeuralNetwork::computeOutput(std::vector <double> inputs) {
-
-}
+std::vector <double> computeOutput(std::vector <double> inputs);
 
 /**
  * Print the neural network layout
