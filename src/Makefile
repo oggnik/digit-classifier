@@ -1,10 +1,12 @@
-CFLAGS = 
+CFLAGS = -g
 export CFLAGS
 
-.PHONY: main.o Reader.o Image.o
+OBJ_FILES = main.o Reader.o Image.o NeuralNetwork.o Neuron.o HiddenNeuron.o InputNeuron.o OutputNeuron.o
 
-all: Reader.o Image.o main.o
-	g++ $(CFLAGS) -o classifier main.o Reader.o Image.o
+.PHONY: $(OBJ_FILES)
+
+all: $(OBJ_FILES)
+	g++ $(CFLAGS) -o classifier $(OBJ_FILES)
 
 Image.o:
 	$(MAKE) -C data Image.o
@@ -18,11 +20,26 @@ main.o:
 	$(MAKE) -C main main.o
 	cp main/main.o .
 
-nn.o:
-	$(MAKE) -C nn nn.o
-	cp nn/nn.o .
+NeuralNetwork.o:
+	$(MAKE) -C nn NeuralNetwork.o
+	cp nn/NeuralNetwork.o .
+
+Neuron.o:
+	$(MAKE) -C nn Neuron.o
+	cp nn/Neuron.o .
+
+HiddenNeuron.o:
+	$(MAKE) -C nn HiddenNeuron.o
+	cp nn/HiddenNeuron.o .
+
+InputNeuron.o:
+	$(MAKE) -C nn InputNeuron.o
+	cp nn/InputNeuron.o .
+
+OutputNeuron.o:
+	$(MAKE) -C nn OutputNeuron.o
+	cp nn/OutputNeuron.o .
 
 clean:
 	-rm -rf *.o
-	-rm Reader.o
 	-rm classifier
