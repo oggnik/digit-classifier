@@ -1,5 +1,6 @@
 #include <vector>
 #include <math.h>
+#include "Neuron.h"
 
 #ifndef hidden_neuron_header
 
