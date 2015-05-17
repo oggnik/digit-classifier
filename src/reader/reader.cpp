@@ -1,22 +1,23 @@
 #include "reader.h"
-#include <iostream>
-#include <fstream>
+
 
 using namespace std;
 
-int bytes_to_int(char bytes[4]) {
-	int num;
-	num = (bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3];
+uint32_t bytes_to_int(char bytes[4]) {
+	uint32_t num;
+	printf("%d %d %d %d\n", bytes[0] & 0xFF, bytes[1] & 0xFF, bytes[2] & 0xFF, bytes[3] & 0xFF);
+	num = (((bytes[0] & 0xFF) << 24) | ((bytes[1] & 0xFF) << 16) | ((bytes[2] & 0xFF) << 8) | (bytes[3] & 0xFF));
 	return num;
 }
 
-void read_image_file(string file_name) {
-	ifstream file;
-	file.open(file_name, ios::in | ios::binary);
 
-	if (!file.is_open()) {
-		cout << "Error opening file!";
-		return;
+Image *read_dataset(string image_file_name, string label_file_name) {
+	ifstream image_file;
+	image_file.open(image_file_name, ios::in | ios::binary);
+
+	if (!image_file.is_open()) {
+		cout << "Error opening image file!";
+		return NULL;
 	}
 
 	char magic_number[4];
@@ -24,16 +25,56 @@ void read_image_file(string file_name) {
 	char num_rows[4];
 	char num_cols[4];
 
-	char image[784];
-	file.read(magic_number, 4);
-	file.read(num_items, 4);
-	file.read(num_rows, 4);
-	file.read(num_cols, 4);
-	file.read(image, 784);
+	image_file.read(magic_number, 4);
+	image_file.read(num_items, 4);
+	image_file.read(num_rows, 4);
+	image_file.read(num_cols, 4);
 
-	cout << bytes_to_int(num_rows) << endl;
+	uint32_t num_images = bytes_to_int(num_items);
 
-	file.close();
+	// Allocate the array of images
+	Image *images = new Image[num_images];
+
+	// Read in the images
+	char image[Image::IMAGE_SIZE];
+	for (int x = 0; x < num_images; x++) {
+		image_file.read(image, Image::IMAGE_SIZE);
+
+		images[x].setImage(image);
+
+		//printf("\n\n\nImage\n\n\n");
+		//images[x].print();
+	}
+
+	image_file.close();
+
+
+	ifstream label_file;
+	label_file.open(label_file_name, ios::in | ios::binary);
+	if (!label_file.is_open()) {
+		cout << "Error opening label file!";
+		return NULL;
+	}
+
+	// Read the labels
+
+	label_file.read(magic_number, 4);
+	label_file.read(num_items, 4);
+	for (int x = 0; x < num_images; x++) {
+		char label_data;
+		label_file.read(&label_data, 1);
+		uint32_t label = label_data & 0xFF;
+
+		images[x].setLabel(label);
+
+		printf("\n\n\nImage\n\n\n");
+		images[x].print();
+	}
+
+
+	label_file.close();
+
+	return images;
 }
 
 
@@ -41,11 +82,12 @@ void read_image_file(string file_name) {
 
 
 int main(int argc, char **argv) {
-	string file;
-	cout << "Enter file name: ";
-	file = "../../data/train-images-idx3-ubyte";
+	string image_file, label_file;
+	//cout << "Enter file name: ";
+	image_file = "../data/train-images-idx3-ubyte";
+	label_file = "../data/train-labels-idx1-ubyte";
 	//cin >> file;
-	read_image_file(file);
+	Image *images = read_dataset(image_file, label_file);
 
 	return 0;
 }
