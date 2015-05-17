@@ -10,18 +10,13 @@ class Neuron {
 		/**
 		 * Make the neuron compute its value
 		 */
-		void computeValue();
+		virtual void computeValue();
 
 		/**
 		 * Get the neuron's value
 		 * This does not update automatically, computeValue must be called to refresh the value
 		 */
 		double getValue();
-
-		/**
-		 * Set the neuron's layer
-		 */
-		void setLayer(int layer);
 
 		/**
 		 * Set the weights of the neuron
@@ -38,7 +33,6 @@ class Neuron {
 		 * Set the neuron's previous layer
 		 */
 		void setPreviousLayer(std::vector <Neuron> previous_layer);
-
 
 	protected:
 		double *weights;
