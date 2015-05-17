@@ -1,10 +1,10 @@
 CFLAGS = 
 export CFLAGS
 
-.PHONY: reader.o image.o
+.PHONY: main.o reader.o image.o
 
-all: reader.o image.o
-	g++ $(CFLAGS) -o classifier reader.o image.o
+all: reader.o image.o main.o
+	g++ $(CFLAGS) -o classifier main.o reader.o image.o
 
 image.o:
 	$(MAKE) -C data image.o
@@ -13,6 +13,10 @@ image.o:
 reader.o:
 	$(MAKE) -C reader reader.o
 	cp reader/reader.o .
+
+main.o:
+	$(MAKE) -C main main.o
+	cp main/main.o .
 
 clean:
 	-rm -rf *.o

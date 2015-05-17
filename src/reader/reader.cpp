@@ -76,18 +76,3 @@ Image *read_dataset(string image_file_name, string label_file_name) {
 
 	return images;
 }
-
-
-
-
-
-int main(int argc, char **argv) {
-	string image_file, label_file;
-	//cout << "Enter file name: ";
-	image_file = "../data/train-images-idx3-ubyte";
-	label_file = "../data/train-labels-idx1-ubyte";
-	//cin >> file;
-	Image *images = read_dataset(image_file, label_file);
-
-	return 0;
-}
