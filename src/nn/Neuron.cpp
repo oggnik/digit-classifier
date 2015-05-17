@@ -1,4 +1,14 @@
 #include "Neuron.h"
+#include <iostream>
+
+using namespace std;
+
+Neuron::Neuron() {
+	for (int i = 0; i < weights.size(); i++) {
+		weights[i] = rand_dist(rand_generator);
+		cout << weights[i] << endl;
+	}
+}
 
 /**
  * Make the neuron compute its value
@@ -44,7 +54,15 @@ std::vector <double> Neuron::getWeights() {
 
 /**
  * Set the neuron's previous layer
+ * This clears any weights the neuron may have had
  */
 void Neuron::setPreviousLayer(std::vector <Neuron> *previous_layer) {
 	this->previous_layer = previous_layer;
+
+	// Reset the weights
+	weights.resize(previous_layer->size());
+	for (int i = 0; i < weights.size(); i++) {
+		weights[i] = rand_dist(rand_generator);
+		cout << weights[i] << endl;
+	}
 }

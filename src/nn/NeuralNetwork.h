@@ -2,6 +2,9 @@
 #include <math.h>
 #include <iostream>
 #include "Neuron.h"
+#include "InputNeuron.h"
+#include "HiddenNeuron.h"
+#include "OutputNeuron.h"
 
 #ifndef neural_network_header
 
@@ -28,7 +31,7 @@ class NeuralNetwork {
 		void print();
 
 	private:
-		std::vector <std::vector <Neuron> > network;
+		std::vector <std::vector <Neuron *> > network;
 };
 
 #define neural_network_header

@@ -1,10 +1,18 @@
 #include <vector>
+#include <random>
 #include <math.h>
 
 #ifndef neuron_header
 
 class Neuron {
 	public:
+
+		/**
+		 * Constructor
+		 * Initialize the weights to random values between -1 and 1
+		 */
+		Neuron();
+
 		/**
 		 * Make the neuron compute its value
 		 */
@@ -29,6 +37,7 @@ class Neuron {
 
 		/**
 		 * Set the neuron's previous layer
+		 * This clears any weights the neuron may have had
 		 */
 		void setPreviousLayer(std::vector <Neuron> *previous_layer);
 
@@ -37,6 +46,9 @@ class Neuron {
 		double value;
 		std::vector <Neuron> *previous_layer;
 };
+
+static std::default_random_engine rand_generator;
+static std::uniform_real_distribution<double> rand_dist(-1.0, 1.0);
 
 #define neuron_header
 #endif

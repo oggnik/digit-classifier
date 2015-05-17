@@ -22,19 +22,30 @@ NeuralNetwork::NeuralNetwork(int num_input_neurons, int num_hidden_neurons, int 
 		// i + 1 because we want to skip the input layer
 		network[i + 1].resize(num_hidden_neurons + 1);
 	}
+
+	// Set up the interconnections in the network
+	for (int i = 0; i < num_input_neurons; i++) {
+		network[0][i] = new InputNeuron;
+	}
 }
 
 /**
  * Deconstructor
  */
 NeuralNetwork::~NeuralNetwork() {
-
+	for (int i = 0; i < network.size(); i++) {
+		for (int j = 0; j < network[i].size(); j++) {
+			delete network[i][j];
+		}
+	}
 }
 
 /**
  * Compute the output of the network with the given inputs
  */
-std::vector <double> computeOutput(std::vector <double> inputs);
+std::vector <double> NeuralNetwork::computeOutput(std::vector <double> inputs) {
+
+}
 
 /**
  * Print the neural network layout

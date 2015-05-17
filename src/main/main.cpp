@@ -19,5 +19,8 @@ int main(int argc, char **argv) {
 	NeuralNetwork *network = new NeuralNetwork(784, 10, 3, 10);
 	network->print();
 
+	delete[] training_images;
+	delete network;
+
 	return 0;
 }
