@@ -142,11 +142,12 @@ double Neuron::derivativeInputValue() {
 	// Add up inputs * weights
 	int previous_layer_size = weights.size();
 	for (int i = 0; i < previous_layer_size; i++) {
-		sum += weights[i] * 1;//previous_layer[i]->getValue();
+		sum += weights[i] * previous_layer[i]->getValue();
 	}
 
 	// Apply the derivative of the sigmoid function
 	// e^x / (1 + e^x)^2
+	double test = exp(sum);
 
 	double denominator = 1 + exp(sum);
 	// Square it
