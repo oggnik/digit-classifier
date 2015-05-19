@@ -19,7 +19,7 @@ void Neuron::computeValue() {
 	// Add up inputs * weights
 	int previous_layer_size = weights.size();
 	for (int i = 0; i < previous_layer_size; i++) {
-		value += weights[i] * (*previous_layer)[i].getValue();
+		value += weights[i] * previous_layer[i]->getValue();
 	}
 
 	// Apply the sigmoid function
@@ -56,13 +56,12 @@ std::vector <double> Neuron::getWeights() {
  * Set the neuron's previous layer
  * This clears any weights the neuron may have had
  */
-void Neuron::setPreviousLayer(std::vector <Neuron> *previous_layer) {
+void Neuron::setPreviousLayer(std::vector <Neuron *> previous_layer) {
 	this->previous_layer = previous_layer;
 
 	// Reset the weights
-	weights.resize(previous_layer->size());
+	weights.resize(previous_layer.size());
 	for (int i = 0; i < weights.size(); i++) {
 		weights[i] = rand_dist(rand_generator);
-		cout << weights[i] << endl;
 	}
 }

@@ -39,12 +39,12 @@ class Neuron {
 		 * Set the neuron's previous layer
 		 * This clears any weights the neuron may have had
 		 */
-		void setPreviousLayer(std::vector <Neuron> *previous_layer);
+		void setPreviousLayer(std::vector <Neuron *> previous_layer);
 
 	protected:
 		std::vector <double>weights;
 		double value;
-		std::vector <Neuron> *previous_layer;
+		std::vector <Neuron *> previous_layer;
 };
 
 static std::default_random_engine rand_generator;
