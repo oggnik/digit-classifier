@@ -100,15 +100,7 @@ double Neuron::getBackPropDelta() {
 	return backPropDelta;
 }
 
-/**
- * Calculate the new weights via backpropogation
- */
-void Neuron::calculateWeights() {
-	/*
-		W(i, j) = W(i, j) + alpha * val(i) * delta(j)
-		delta(j) = g'(in(j)) * sum(W(j, k) * delta(k))
-	*/
-
+double Neuron::calculateBackPropDelta() {
 	// Calculate the delta value
 	double derivativeIn = derivativeInputValue();
 
@@ -119,10 +111,11 @@ void Neuron::calculateWeights() {
 		deltaSum += weightVal * deltaVal;
 	}
 
-	backPropDelta = deltaSum * derivativeIn;
+	return deltaSum * derivativeIn;
+}
 
-
-	// Update the weights
+void Neuron::updateWeights() {
+		// Update the weights
 	for (int i = 0; i < weights.size(); i++) {
 		double weight = weights[i];
 
@@ -132,6 +125,21 @@ void Neuron::calculateWeights() {
 
 		weights[i] = weight;
 	}
+}
+
+/**
+ * Calculate the new weights via backpropogation
+ */
+void Neuron::calculateWeights() {
+	/*
+		W(i, j) = W(i, j) + alpha * val(i) * delta(j)
+		delta(j) = g'(in(j)) * sum(W(j, k) * delta(k))
+	*/
+
+
+	backPropDelta = calculateBackPropDelta();
+
+	updateWeights();
 }
 
 /**

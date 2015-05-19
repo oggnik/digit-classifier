@@ -85,6 +85,10 @@ class Neuron {
 		 * This calculates g'(in)
 		 */
 		double derivativeInputValue();
+
+		double calculateBackPropDelta();
+
+		void updateWeights();
 };
 
 

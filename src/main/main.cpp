@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
 
 	cout << "Training..." << endl;
 	int iterations = 0;
-	while (error_rate > 0.1) {
+	//while (error_rate > 0.1) {
 		cout << "Training iteration: " << iterations << ", Error rate: " << error_rate << endl;
 		// Perform a round of training
 		for (int i = 0; i < training_images.size(); i++) {
@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
 		}
 		error_rate = getErrorRate(network, training_images);
 		iterations++;
-	}
+	//}
 
 	cout << "Final error rate: " << error_rate << endl;
 
