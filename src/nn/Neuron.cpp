@@ -58,6 +58,13 @@ std::vector <double> Neuron::getWeights() {
 }
 
 /**
+ * Get a specific weight
+ */
+double Neuron::getWeightByIndex(int index) {
+	return weights[index];
+}
+
+/**
  * Set the neuron's previous layer
  * This clears any weights the neuron may have had
  */
@@ -69,4 +76,83 @@ void Neuron::setPreviousLayer(std::vector <Neuron *> previous_layer) {
 	for (int i = 0; i < weights.size(); i++) {
 		weights[i] = rand_dist(rand_generator);
 	}
+}
+
+/**
+ * Set the neuron's next layer
+ */
+void Neuron::setNextLayer(std::vector <Neuron *> next_layer) {
+	this->next_layer = next_layer;
+}
+
+/**
+ * Set the index of the neuron within its layer
+ */
+void Neuron::setIndex(int index) {
+	this->index = index;
+}
+
+/**
+ * Get the back propogation delta for this neuron
+ */
+double Neuron::getBackPropDelta() {
+	return backPropDelta;
+}
+
+/**
+ * Calculate the new weights via backpropogation
+ */
+void Neuron::calculateWeights() {
+	/*
+		W(i, j) = W(i, j) + alpha * val(i) * delta(j)
+		delta(j) = g'(in(j)) * sum(W(j, k) * delta(k))
+	*/
+
+	// Calculate the delta value
+	double derivativeIn = derivativeInputValue();
+
+	double deltaSum = 0;
+	for (int j = 0; j < next_layer.size(); j++) {
+		double weightVal = next_layer[j]->getWeightByIndex(index);
+		double deltaVal = next_layer[j]->getBackPropDelta();
+		deltaSum += weightVal * deltaVal;
+	}
+
+	backPropDelta = deltaSum * derivativeIn;
+
+
+	// Update the weights
+	for (int i = 0; i < weights.size(); i++) {
+		double weight = weights[i];
+
+		double diff = LEARNING_RATE * backPropDelta * previous_layer[i]->getValue();
+
+		weight += diff;
+
+		weights[i] = weight;
+	}
+}
+
+/**
+ * This calculates g'(in)
+ */
+double Neuron::derivativeInputValue() {
+	double sum = 0.0;
+
+	// Add up inputs * weights
+	int previous_layer_size = weights.size();
+	for (int i = 0; i < previous_layer_size; i++) {
+		sum += weights[i] * previous_layer[i]->getValue();
+	}
+
+	// Apply the derivative of the sigmoid function
+	// e^x / (1 + e^x)^2
+
+	double denominator = 1 + exp(sum);
+	// Square it
+	denominator *= denominator;
+
+	double numerator = exp(sum);
+
+	return numerator / denominator;
 }

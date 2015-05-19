@@ -32,6 +32,8 @@ NeuralNetwork::NeuralNetwork(int num_input_neurons, int num_hidden_neurons, int 
 	// Input layer
 	for (int i = 0; i < num_input_neurons; i++) {
 		network[0][i] = new InputNeuron;
+		network[0][i]->setIndex(i);
+		network[0][i]->setNextLayer(network[1]);
 	}
 	network[0][num_input_neurons] = new DummyNeuron;
 
@@ -42,6 +44,8 @@ NeuralNetwork::NeuralNetwork(int num_input_neurons, int num_hidden_neurons, int 
 			network[i+1][j] = new HiddenNeuron;
 
 			network[i+1][j]->setPreviousLayer(network[i]);
+			network[i+1][j]->setNextLayer(network[i+2]);
+			network[i+1][j]->setIndex(j);
 		}
 		network[i+1][num_hidden_neurons] = new DummyNeuron;
 	}
@@ -52,6 +56,8 @@ NeuralNetwork::NeuralNetwork(int num_input_neurons, int num_hidden_neurons, int 
 		network[num_hidden_layers + 1][i] = new OutputNeuron;
 
 		network[num_hidden_layers + 1][i]->setPreviousLayer(network[num_hidden_layers]);
+
+		network[num_hidden_layers + 1][i]->setIndex(i);
 	}
 	// The output layer doesn't need a dummy neuron
 
@@ -95,6 +101,28 @@ vector <double> NeuralNetwork::computeOutput(vector <double> inputs) {
 
 	return outputs;
 }
+
+
+/**
+ * Perform a single round of training on the network
+ */
+void NeuralNetwork::trainNetwork(vector <double> expectedOutput, vector <double> inputs) {
+	vector<double> outputs = computeOutput(inputs);
+
+	for (int i = 0; i < expectedOutput.size(); i++) {
+		// Set the error
+		double error = expectedOutput[i] - outputs[i];
+		OutputNeuron *outputNeuron = dynamic_cast<OutputNeuron *>(network[network.size() - 1][i]);
+		outputNeuron->setNeuronError(error);
+
+		for (int j = network.size() - 1; j >= 0; j--) {
+			for (int k = 0; k < network[j].size(); k++) {
+				network[j][k]->calculateWeights();
+			}
+		}
+	}
+}
+
 
 /**
  * Print the neural network layout

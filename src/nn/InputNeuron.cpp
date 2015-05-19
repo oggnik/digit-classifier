@@ -14,3 +14,10 @@ void InputNeuron::setInputValue(double value) {
 void InputNeuron::computeValue() {
 	// Do nothing
 }
+
+/**
+ * This method does nothing
+ */
+void InputNeuron::calculateWeights() {
+	// Do nothing
+}

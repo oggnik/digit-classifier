@@ -5,7 +5,18 @@
 #ifndef output_neuron_header
 
 class OutputNeuron : public Neuron {
+	public:
+		/*
+		 * Set the error of the neuron for training
+		 */
+		void setNeuronError(double error);
+		/*
+		 * A modified calculation of weights based on the error
+		 */
+		void calculateWeights();
 
+	private:
+		double error;
 };
 
 #define output_neuron_header

@@ -12,3 +12,10 @@ void DummyNeuron::computeValue() {
 double DummyNeuron::getValue() {
 	return -1;
 }
+
+/**
+ * This method does nothing
+ */
+void DummyNeuron::calculateWeights() {
+	// Do nothing
+}

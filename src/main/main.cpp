@@ -30,8 +30,17 @@ int main(int argc, char **argv) {
 		cout << "\t" << i << ": " << output[i] << endl;
 	}
 
+	vector <double> expectedOutput(10);
+	expectedOutput[5] = 1.0;
+	network->trainNetwork(expectedOutput, testImage->getImageAsVector());
 
-	cout << "Initial error rate: " << getErrorRate(network, training_images) << endl;
+	output = network->computeOutput(testImage->getImageAsVector());
+	cout << "Network output" << endl;
+	for (int i = 0; i < output.size(); i++) {
+		cout << "\t" << i << ": " << output[i] << endl;
+	}
+
+	//cout << "Initial error rate: " << getErrorRate(network, training_images) << endl;
 
 
 	// Free memory

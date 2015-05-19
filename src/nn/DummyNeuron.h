@@ -18,6 +18,11 @@ class DummyNeuron : public Neuron {
 		 * This method always returns -1
 		 */
 		double getValue();
+
+		/**
+		 * This method does nothing
+		 */
+		void calculateWeights();
 };
 
 #define dummy_neuron_header

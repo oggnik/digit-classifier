@@ -27,6 +27,11 @@ class NeuralNetwork {
 		std::vector <double> computeOutput(std::vector <double> inputs);
 
 		/**
+		 * Perform a single round of training on the network
+		 */
+		void trainNetwork(std::vector<double> expectedOutput, std::vector <double> inputs);
+
+		/**
 		 * Print the neural network layout
 		 */
 		void print();

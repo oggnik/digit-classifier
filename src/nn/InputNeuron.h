@@ -14,6 +14,11 @@ class InputNeuron : public Neuron {
 		 * This method does nothing
 		 */
 		void computeValue();
+
+		/**
+		 * This method does nothing
+		 */
+		void calculateWeights();
 };
 
 #define input_neuron_header
