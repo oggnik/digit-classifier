@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
 
 	Image *testImage = training_images[0];
 	testImage->print();
-	vector <double> output = network->computeOutput(testImage->getImageAsVector());
+	vector <double> output = network->computeOutput(testImage->getImageAsScaledVector());
 
 	cout << "Network output" << endl;
 	for (int i = 0; i < output.size(); i++) {
@@ -32,9 +32,9 @@ int main(int argc, char **argv) {
 
 	vector <double> expectedOutput(10);
 	expectedOutput[5] = 1.0;
-	network->trainNetwork(expectedOutput, testImage->getImageAsVector());
+	network->trainNetwork(expectedOutput, testImage->getImageAsScaledVector());
 
-	output = network->computeOutput(testImage->getImageAsVector());
+	output = network->computeOutput(testImage->getImageAsScaledVector());
 	cout << "Network output" << endl;
 	for (int i = 0; i < output.size(); i++) {
 		cout << "\t" << i << ": " << output[i] << endl;
@@ -64,7 +64,7 @@ double getErrorRate(NeuralNetwork *network, vector <Image *> image_set) {
 
 	for (int i = 0; i < numImages; i++) {
 		// Get the outputs
-		vector <double> imageOutput = network->computeOutput(image_set[i]->getImageAsVector());
+		vector <double> imageOutput = network->computeOutput(image_set[i]->getImageAsScaledVector());
 		// Find the maximum, this is the networks vote
 		int maxIndex = 0;
 		for (int j = 0; j < imageOutput.size(); j++) {

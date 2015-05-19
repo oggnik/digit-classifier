@@ -127,7 +127,7 @@ void Neuron::calculateWeights() {
 		double weight = weights[i];
 
 		double diff = LEARNING_RATE * backPropDelta * previous_layer[i]->getValue();
-
+		//cout << diff << endl;
 		weight += diff;
 
 		weights[i] = weight;
@@ -143,16 +143,8 @@ double Neuron::derivativeInputValue() {
 	// Add up inputs * weights
 	int previous_layer_size = previous_layer.size();
 	for (int i = 0; i < previous_layer_size; i++) {
-		int a = 0;
-		if (weights[i]) {
-			a = 1;
-		}
-		if (previous_layer[i]->getValue()) {
-			a = 2;
-		}
 		sum += weights[i] * previous_layer[i]->getValue();
 	}
-
 	// Apply the derivative of the sigmoid function
 	// e^x / (1 + e^x)^2
 

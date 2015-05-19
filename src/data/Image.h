@@ -46,7 +46,7 @@ class Image {
 		 * Get the image as a double vector
 		 * This is used as input to the neural network
 		 */
-		std::vector <double> getImageAsVector();
+		std::vector <double> getImageAsScaledVector();
 
 		/**
 		 * Print the image to console
