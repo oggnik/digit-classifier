@@ -12,6 +12,8 @@ Neuron::Neuron() {
 		weights[i] = rand_dist(rand_generator);
 	}
 	value = 0.0;
+	index = 0;
+	backPropDelta = 0.0;
 }
 
 /**
