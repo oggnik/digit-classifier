@@ -14,6 +14,13 @@ double DummyNeuron::getValue() {
 }
 
 /**
+ * Get a specific weight
+ */
+double DummyNeuron::getWeightByIndex(int index) {
+	return 0;
+}
+
+/**
  * This method does nothing
  */
 void DummyNeuron::calculateWeights() {

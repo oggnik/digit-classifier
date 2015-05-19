@@ -44,7 +44,7 @@ class Neuron {
 		/**
 		 * Get a specific weight
 		 */
-		double getWeightByIndex(int index);
+		virtual double getWeightByIndex(int index);
 
 		/**
 		 * Set the neuron's previous layer

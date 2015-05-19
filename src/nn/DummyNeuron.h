@@ -20,6 +20,11 @@ class DummyNeuron : public Neuron {
 		double getValue();
 
 		/**
+		 * Get a specific weight
+		 */
+		double getWeightByIndex(int index);
+
+		/**
 		 * This method does nothing
 		 */
 		void calculateWeights();

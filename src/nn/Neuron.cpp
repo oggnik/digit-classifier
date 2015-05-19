@@ -113,7 +113,6 @@ void Neuron::calculateWeights() {
 
 	double deltaSum = 0;
 	for (int j = 0; j < next_layer.size(); j++) {
-		cout << "Index: " << index << endl;
 		double weightVal = next_layer[j]->getWeightByIndex(index);
 		double deltaVal = next_layer[j]->getBackPropDelta();
 		deltaSum += weightVal * deltaVal;
