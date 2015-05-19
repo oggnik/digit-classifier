@@ -20,7 +20,7 @@ class OutputNeuron : public Neuron {
 		void calculateWeights();
 
 	private:
-		double error;
+		double error(0);
 };
 
 #define output_neuron_header
