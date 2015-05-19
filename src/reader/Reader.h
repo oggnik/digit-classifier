@@ -1,7 +1,7 @@
 #include <cstdint>
 #include <iostream>
 #include <fstream>
-#include "../data/image.h"
+#include "../data/Image.h"
 
 #ifndef reader_header
 
