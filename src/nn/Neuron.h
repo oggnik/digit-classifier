@@ -1,5 +1,6 @@
 #include <vector>
 #include <random>
+#include <chrono>
 #include <math.h>
 
 #ifndef neuron_header
