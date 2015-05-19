@@ -23,7 +23,7 @@ void Neuron::computeValue() {
 	}
 
 	// Apply the sigmoid function
-	double denominator = 1 + exp(-1.0 * value);
+	double denominator = 1 + exp(value * -1.0);
 	value = 1.0 / denominator;
 
 	this->value = value;
