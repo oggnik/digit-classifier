@@ -33,7 +33,6 @@ NeuralNetwork::NeuralNetwork(int num_input_neurons, int num_hidden_neurons, int 
 	for (int i = 0; i < num_input_neurons; i++) {
 		network[0][i] = new InputNeuron;
 		network[0][i]->setIndex(i);
-		network[0][i]->setNextLayer(network[1]);
 	}
 	network[0][num_input_neurons] = new DummyNeuron;
 
@@ -44,10 +43,14 @@ NeuralNetwork::NeuralNetwork(int num_input_neurons, int num_hidden_neurons, int 
 			network[i+1][j] = new HiddenNeuron;
 
 			network[i+1][j]->setPreviousLayer(network[i]);
-			network[i+1][j]->setNextLayer(network[i+2]);
 			network[i+1][j]->setIndex(j);
 		}
 		network[i+1][num_hidden_neurons] = new DummyNeuron;
+
+		// Set the previous layer's next layer
+		for (int j = 0; j < network[i].size(); j++) {
+			network[i][j]->setNextLayer(network[i+1]);
+		}
 	}
 
 	// Output layer
@@ -61,6 +64,10 @@ NeuralNetwork::NeuralNetwork(int num_input_neurons, int num_hidden_neurons, int 
 	}
 	// The output layer doesn't need a dummy neuron
 
+	// Set the previous layer's next layer
+	for (int i = 0; i < num_output_neurons; i++) {
+		network[num_hidden_layers][i]->setNextLayer(network[num_hidden_layers + 1]);
+	}
 
 }
 
