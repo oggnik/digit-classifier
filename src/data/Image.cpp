@@ -49,6 +49,21 @@ uint32_t Image::getLabel() {
 }
 
 /**
+ * Get the image as a double vector
+ * This is used as input to the neural network
+ */
+vector <double> Image::getImageAsVector() {
+	vector <double> imageValues(IMAGE_SIZE);
+
+	for (int i = 0; i < IMAGE_SIZE; i++) {
+		uint32_t pixel = 0 | (image_data[i] & 0xFF);
+		imageValues[i] = (double) pixel;
+	}
+
+	return imageValues;
+}
+
+/**
  * Print the image to console
  */
 void Image::print() {

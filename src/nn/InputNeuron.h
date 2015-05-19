@@ -5,7 +5,15 @@
 #ifndef input_neuron_header
 
 class InputNeuron : public Neuron {
-
+	public:
+		/**
+		 * Set the input value for the neuron
+		 */
+		void setInputValue(double value);
+		/**
+		 * This method does nothing
+		 */
+		void computeValue();
 };
 
 #define input_neuron_header

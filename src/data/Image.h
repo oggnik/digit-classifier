@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <cstdint>
+#include <vector>
 
 #ifndef image_header
 
@@ -40,6 +41,12 @@ class Image {
 		 * Get the label for the image
 		 */
 		uint32_t getLabel();
+
+		/**
+		 * Get the image as a double vector
+		 * This is used as input to the neural network
+		 */
+		std::vector <double> getImageAsVector();
 
 		/**
 		 * Print the image to console

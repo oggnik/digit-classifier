@@ -72,7 +72,29 @@ NeuralNetwork::~NeuralNetwork() {
 /**
  * Compute the output of the network with the given inputs
  */
-std::vector <double> computeOutput(std::vector <double> inputs);
+vector <double> NeuralNetwork::computeOutput(vector <double> inputs) {
+	vector <double> outputs(network[network.size() - 1].size());
+
+	// Set the input values
+	for (int i = 0; i < inputs.size(); i++) {
+		InputNeuron *neuron = dynamic_cast<InputNeuron *>(network[0][i]);
+		neuron->setInputValue(inputs[i]);
+	}
+
+	// Compute the values for all the neurons
+	for (int i = 1; i < network.size(); i++) {
+		for (int j = 0; j < network[i].size(); j++) {
+			network[i][j]->computeValue();
+		}
+	}
+
+	// Get the output layers values
+	for (int i = 0; i < network[network.size() - 1].size(); i++) {
+		inputs[i] = network[network.size() - 1][i]->getValue();
+	}
+
+	return outputs;
+}
 
 /**
  * Print the neural network layout

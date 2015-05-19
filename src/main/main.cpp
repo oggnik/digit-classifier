@@ -1,6 +1,7 @@
 #include "../data/image.h"
 #include "../reader/reader.h"
 #include "../nn/NeuralNetwork.h"
+#include "vector"
 
 using namespace std;
 
@@ -19,8 +20,24 @@ int main(int argc, char **argv) {
 	NeuralNetwork *network = new NeuralNetwork(784, 10, 3, 10);
 	network->print();
 
+	Image testImage = training_images[0];
+	testImage.print();
+	vector <double> output = network->computeOutput(testImage.getImageAsVector());
+
+	cout << "Network output" << endl;
+	for (int i = 0; i < output.size(); i++) {
+		cout << "\t" << i << ": " << output[i] << endl;
+	}
+
+	cout << "asdf" << endl;
+
 	delete[] training_images;
+
+	cout << "fdas" << endl;
+
 	delete network;
+
+	cout << "fasdf" << endl;
 
 	return 0;
 }
