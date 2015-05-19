@@ -10,7 +10,6 @@ std::uniform_real_distribution<double> rand_dist(-1.0, 1.0);
 Neuron::Neuron() {
 	for (int i = 0; i < weights.size(); i++) {
 		weights[i] = rand_dist(rand_generator);
-		cout << weights[i] << endl;
 	}
 	value = 0.0;
 }
@@ -140,9 +139,9 @@ double Neuron::derivativeInputValue() {
 	double sum = 0.0;
 
 	// Add up inputs * weights
-	int previous_layer_size = weights.size();
+	int previous_layer_size = previous_layer.size();
 	for (int i = 0; i < previous_layer_size; i++) {
-		sum += weights[i] * 1.0;//previous_layer[i]->getValue();
+		sum += weights[i] * previous_layer[i]->getValue();
 	}
 
 	// Apply the derivative of the sigmoid function
