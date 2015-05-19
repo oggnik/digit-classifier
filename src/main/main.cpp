@@ -1,5 +1,5 @@
-#include "../data/image.h"
-#include "../reader/reader.h"
+#include "../data/Image.h"
+#include "../reader/Reader.h"
 #include "../nn/NeuralNetwork.h"
 #include "vector"
 
