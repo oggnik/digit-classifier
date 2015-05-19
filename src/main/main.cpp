@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
 
 
 	for (int i = 0; i < training_images.size(); i++) {
-		free(training_images[i]);
+		delete training_images[i];
 	}
 
 	delete network;
