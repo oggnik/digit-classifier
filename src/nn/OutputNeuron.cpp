@@ -1,13 +1,20 @@
 #include "OutputNeuron.h"
 
-/*
+/**
+ * Constructor
+ */
+OutputNeuron::OutputNeuron() : Neuron() {
+	error = 0;
+}
+
+/**
  * Set the error of the neuron for training
  */
 void OutputNeuron::setNeuronError(double error) {
 	this->error = error;
 }
 
-/*
+/**
  * A modified calculation of weights based on the error
  */
 void OutputNeuron::calculateWeights() {

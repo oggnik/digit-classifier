@@ -6,11 +6,15 @@
 
 class OutputNeuron : public Neuron {
 	public:
-		/*
+		/**
+		 * Constructor
+		 */
+		OutputNeuron();
+		/**
 		 * Set the error of the neuron for training
 		 */
 		void setNeuronError(double error);
-		/*
+		/**
 		 * A modified calculation of weights based on the error
 		 */
 		void calculateWeights();
