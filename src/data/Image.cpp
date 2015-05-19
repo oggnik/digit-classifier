@@ -1,4 +1,4 @@
-#include "image.h"
+#include "Image.h"
 
 using namespace std;
 
