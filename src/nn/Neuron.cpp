@@ -117,13 +117,11 @@ double Neuron::calculateBackPropDelta() {
 void Neuron::updateWeights() {
 		// Update the weights
 	for (int i = 0; i < weights.size(); i++) {
-		double weight = weights[i];
 
 		double diff = LEARNING_RATE * backPropDelta * previous_layer[i]->getValue();
 		//cout << diff << endl;
-		weight += diff;
 
-		weights[i] = weight;
+		weights[i] = weights[i] + diff;
 	}
 }
 
