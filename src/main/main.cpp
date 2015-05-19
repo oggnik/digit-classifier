@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
 
 	cout << "Training neural network" << endl;
 
-	NeuralNetwork *network = new NeuralNetwork(784, 10, 3, 10);
+	NeuralNetwork *network = new NeuralNetwork(784, 100, 1, 10);
 	network->print();
 
 	Image *testImage = training_images[0];
