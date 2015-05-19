@@ -30,6 +30,12 @@ int main(int argc, char **argv) {
 		cout << "\t" << i << ": " << output[i] << endl;
 	}
 
+
+
+	for (int i = 0; i < training_images.size(); i++) {
+		free(training_images[i]);
+	}
+
 	delete network;
 
 	return 0;
