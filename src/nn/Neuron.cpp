@@ -8,6 +8,7 @@ Neuron::Neuron() {
 		weights[i] = rand_dist(rand_generator);
 		cout << weights[i] << endl;
 	}
+	value = 0.0;
 }
 
 /**
