@@ -3,6 +3,10 @@
 
 using namespace std;
 
+unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+std::default_random_engine rand_generator(seed);
+std::uniform_real_distribution<double> rand_dist(-1.0, 1.0);
+
 Neuron::Neuron() {
 	for (int i = 0; i < weights.size(); i++) {
 		weights[i] = rand_dist(rand_generator);

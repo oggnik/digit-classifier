@@ -47,8 +47,7 @@ class Neuron {
 		std::vector <Neuron *> previous_layer;
 };
 
-static std::default_random_engine rand_generator;
-static std::uniform_real_distribution<double> rand_dist(-1.0, 1.0);
+
 
 #define neuron_header
 #endif

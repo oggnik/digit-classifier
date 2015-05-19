@@ -90,7 +90,7 @@ vector <double> NeuralNetwork::computeOutput(vector <double> inputs) {
 
 	// Get the output layers values
 	for (int i = 0; i < network[network.size() - 1].size(); i++) {
-		inputs[i] = network[network.size() - 1][i]->getValue();
+		outputs[i] = network[network.size() - 1][i]->getValue();
 	}
 
 	return outputs;
