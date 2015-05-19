@@ -31,6 +31,10 @@ int main(int argc, char **argv) {
 	}
 
 
+	cout << "Initial error rate: " << getErrorRate(network, training_images) << endl;
+
+
+	// Free memory
 
 	for (int i = 0; i < training_images.size(); i++) {
 		delete training_images[i];
@@ -47,9 +51,22 @@ int main(int argc, char **argv) {
  */
 double getErrorRate(NeuralNetwork *network, vector <Image *> image_set) {
 	int numImages = image_set.size();
+	int numErrors = 0;
 
 	for (int i = 0; i < numImages; i++) {
+		// Get the outputs
+		vector <double> imageOutput = network->computeOutput(image_set[i]->getImageAsVector());
+		// Find the maximum, this is the networks vote
+		int maxIndex = 0;
+		for (int j = 0; j < imageOutput.size(); j++) {
+			if (imageOutput[j] > imageOutput[maxIndex]) {
+				maxIndex = j;
+			}
+		}
 
+		if (maxIndex != image_set[i]->getLabel()) {
+			numErrors++;
+		}
 	}
-	return 0.0;
+	return (1.0 * numErrors) / numImages;
 }
