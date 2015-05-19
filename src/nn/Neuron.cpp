@@ -141,6 +141,13 @@ double Neuron::derivativeInputValue() {
 	// Add up inputs * weights
 	int previous_layer_size = previous_layer.size();
 	for (int i = 0; i < previous_layer_size; i++) {
+		int a = 0;
+		if (weights[i]) {
+			a = 1;
+		}
+		if (previous_layer[i]->getValue()) {
+			a = 2;
+		}
 		sum += weights[i] * previous_layer[i]->getValue();
 	}
 
