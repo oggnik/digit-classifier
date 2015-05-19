@@ -17,7 +17,7 @@ class Neuron {
 		/**
 		 * The learning rate for training
 		 */
-		static constexpr double LEARNING_RATE = 0.2;
+		static constexpr double LEARNING_RATE = 0.1;
 
 		/**
 		 * Make the neuron compute its value

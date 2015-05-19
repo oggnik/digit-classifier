@@ -11,8 +11,11 @@ int main(int argc, char **argv) {
 
 	cout << "Loading training set" << endl;
 
-	string training_image_file = "../data/train-images-idx3-ubyte";
-	string training_label_file = "../data/train-labels-idx1-ubyte";
+	// string training_image_file = "../data/train-images-idx3-ubyte";
+	// string training_label_file = "../data/train-labels-idx1-ubyte";
+
+	string training_image_file = "../data/t10k-images-idx3-ubyte";
+	string training_label_file = "../data/t10k-labels-idx1-ubyte";
 
 	vector <Image *> training_images = read_dataset(training_image_file, training_label_file);
 
@@ -30,17 +33,30 @@ int main(int argc, char **argv) {
 		cout << "\t" << i << ": " << output[i] << endl;
 	}
 
-	vector <double> expectedOutput(10);
-	expectedOutput[5] = 1.0;
-	network->trainNetwork(expectedOutput, testImage->getImageAsScaledVector());
+	double error_rate = getErrorRate(network, training_images);
+	cout << "Initial error rate: " << error_rate << endl;
 
-	output = network->computeOutput(testImage->getImageAsScaledVector());
-	cout << "Network output" << endl;
-	for (int i = 0; i < output.size(); i++) {
-		cout << "\t" << i << ": " << output[i] << endl;
+	cout << "Training..." << endl;
+	int iterations = 0;
+	while (error_rate > 0.1) {
+		cout << "Training iteration: " << iterations << ", Error rate: " << error_rate << endl;
+		// Perform a round of training
+		for (int i = 0; i < training_images.size(); i++) {
+			if (i % 1000 == 0) {
+				cout << (i * 1.0 / training_images.size()) << endl;
+			}
+			// Set expected outputs
+			vector <double> expectedOutput(10);
+			Image *image = training_images[i];
+			expectedOutput[image->getLabel()] = 1.0;
+			// train
+			network->trainNetwork(expectedOutput, image->getImageAsScaledVector());
+		}
+		error_rate = getErrorRate(network, training_images);
+		iterations++;
 	}
 
-	//cout << "Initial error rate: " << getErrorRate(network, training_images) << endl;
+	cout << "Final error rate: " << error_rate << endl;
 
 
 	// Free memory
