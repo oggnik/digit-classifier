@@ -6,6 +6,74 @@ using namespace std;
  * Constructor
  */
 NeuralNetwork::NeuralNetwork(int num_input_neurons, int num_hidden_neurons, int num_hidden_layers, int num_output_neurons) {
+	init(num_input_neurons, num_hidden_neurons, num_hidden_layers, num_output_neurons);
+}
+
+
+/**
+ * Constructor from a save
+ */
+NeuralNetwork::NeuralNetwork(std::string file_name) {
+	ifstream in;
+	in.open(file_name, ios::in);
+
+	if (!in.is_open()) {
+		cout << "Could not open neural network input file." << endl;
+		return;
+	}
+
+	int num_input_neurons;
+	int num_hidden_neurons;
+	int num_hidden_layers;
+	int num_output_neurons;
+	// Read in the layout of the network
+	in >> num_input_neurons;
+	in >> num_hidden_neurons;
+	in >> num_hidden_layers;
+	in >> num_output_neurons;
+
+	// Initialize the network
+	init(num_input_neurons, num_hidden_neurons, num_hidden_layers, num_output_neurons);
+
+	cout << "Size: " << network[1].size() << endl;
+
+	int floats_read = 0;
+
+	// Get the weights of the hidden layer
+	for (int i = 1; i < network.size() - 1; i++) {
+		for (int j = 0; j < network[i].size() - 1; j++) {
+			// + 1 for the dummy neurons
+			vector <double> weights(num_input_neurons + 1);
+			for (int k = 0; k < weights.size(); k++) {
+				in >> weights[k];
+				floats_read++;
+			}
+			network[i][j]->setWeights(weights);
+		}
+	}
+
+	// Get the weights of the output layer
+	for (int i = 0; i < num_output_neurons; i++) {
+		// + 1 for the dummy neurons
+		vector <double> weights(num_hidden_neurons + 1);
+		for (int j = 0; j < weights.size(); j++) {
+			in >> weights[j];
+			floats_read++;
+		}
+		network[num_hidden_layers + 1][i]->setWeights(weights);
+	}
+
+	cout << "Read: " << floats_read << endl;
+
+	in.close();
+
+}
+
+
+/**
+ * Initialize the neural network
+ */
+void NeuralNetwork::init(int num_input_neurons, int num_hidden_neurons, int num_hidden_layers, int num_output_neurons) {
 	// Set the number of layers, num hidden + input + output
 	network.resize(num_hidden_layers + 2);
 
@@ -68,16 +136,7 @@ NeuralNetwork::NeuralNetwork(int num_input_neurons, int num_hidden_neurons, int 
 	for (int i = 0; i < num_output_neurons; i++) {
 		network[num_hidden_layers][i]->setNextLayer(network[num_hidden_layers + 1]);
 	}
-
 }
-
-/**
- * Constructor from a save
- */
-NeuralNetwork::NeuralNetwork(std::string file_name) {
-
-}
-
 
 /**
  * Deconstructor

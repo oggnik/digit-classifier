@@ -21,7 +21,13 @@ int main(int argc, char **argv) {
 
 	cout << "Training neural network" << endl;
 
-	NeuralNetwork *network = new NeuralNetwork(784, 200, 1, 10);
+	if (true) {
+		NeuralNetwork *network = new NeuralNetwork("testout");
+		cout << "Error rate: " << getErrorRate(network, training_images) << endl;
+		return 0;
+	}
+
+	NeuralNetwork *network = new NeuralNetwork(784, 10, 1, 10);
 	network->print();
 
 	Image *testImage = training_images[0];
@@ -38,7 +44,7 @@ int main(int argc, char **argv) {
 
 	cout << "Training..." << endl;
 	int iterations = 0;
-	while (error_rate > 0.1) {
+	while (error_rate > 0.2) {
 		cout << "Training iteration: " << iterations << ", Error rate: " << error_rate << endl;
 		// Perform a round of training
 		for (int i = 0; i < training_images.size(); i++) {

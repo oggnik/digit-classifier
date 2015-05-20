@@ -50,6 +50,11 @@ class NeuralNetwork {
 
 	private:
 		std::vector <std::vector <Neuron *> > network;
+
+		/**
+		 * Initialize the neural network
+		 */
+		void init(int num_input_neurons, int num_hidden_neurons, int num_hidden_layers, int num_output_neurons);
 };
 
 #define neural_network_header
