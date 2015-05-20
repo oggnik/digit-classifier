@@ -91,7 +91,7 @@ NeuralNetwork *train(vector <Image *> training_images) {
 			network->trainNetwork(expectedOutput, image->getImageAsScaledVector());
 		}
 		error_rate = getErrorRate(network, training_images);
-		network->saveToFile("testout");
+		network->saveToFile("current_network.dat");
 		iterations++;
 	}
 
