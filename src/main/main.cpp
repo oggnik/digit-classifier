@@ -1,43 +1,75 @@
 #include "../data/Image.h"
 #include "../reader/Reader.h"
 #include "../nn/NeuralNetwork.h"
-#include "vector"
+#include <vector>
+#include <string.h>
 
 using namespace std;
 
 double getErrorRate(NeuralNetwork *network, vector<Image *> image_set);
+NeuralNetwork *train(vector <Image *> training_images);
+
+
+string training_image_file = "../data/train-images-idx3-ubyte";
+string training_label_file = "../data/train-labels-idx1-ubyte";
+
+string test_image_file = "../data/t10k-images-idx3-ubyte";
+string test_label_file = "../data/t10k-labels-idx1-ubyte";
 
 int main(int argc, char **argv) {
 
+	bool load = false;
+	string load_file = "";
+
+	if (argc == 3 && strcmp(argv[1], "-f") == 0) {
+		load = true;
+		load_file = argv[2];
+	}
+
+	NeuralNetwork *network;
+
 	cout << "Loading training set" << endl;
-
-	string training_image_file = "../data/train-images-idx3-ubyte";
-	string training_label_file = "../data/train-labels-idx1-ubyte";
-
-	// string training_image_file = "../data/t10k-images-idx3-ubyte";
-	// string training_label_file = "../data/t10k-labels-idx1-ubyte";
-
 	vector <Image *> training_images = read_dataset(training_image_file, training_label_file);
 
-	cout << "Training neural network" << endl;
-
-	if (true) {
-		NeuralNetwork *network = new NeuralNetwork("testout");
-		cout << "Error rate: " << getErrorRate(network, training_images) << endl;
-		return 0;
+	if (!load) {
+		// Train
+		cout << "Training neural network" << endl;
+		network = train(training_images);
+	} else {
+		// Load
+		cout << "Loading neural network from file" << endl;
+		network = new NeuralNetwork(load_file);
 	}
 
-	NeuralNetwork *network = new NeuralNetwork(784, 10, 1, 10);
-	network->print();
+	double training_error_rate = getErrorRate(network, training_images);
+	cout << "Final error rate on training data: " << training_error_rate << endl;
 
-	Image *testImage = training_images[0];
-	testImage->print();
-	vector <double> output = network->computeOutput(testImage->getImageAsScaledVector());
+	// Image *testImage = training_images[0];
+	// testImage->print();
+	// vector <double> output = network->computeOutput(testImage->getImageAsScaledVector());
 
-	cout << "Network output" << endl;
-	for (int i = 0; i < output.size(); i++) {
-		cout << "\t" << i << ": " << output[i] << endl;
+	// cout << "Network output" << endl;
+	// for (int i = 0; i < output.size(); i++) {
+	// 	cout << "\t" << i << ": " << output[i] << endl;
+	// }
+
+	// Test against the test data
+	vector <Image *> test_images = read_dataset(test_image_file, test_label_file);
+	double test_error_rate = getErrorRate(network, test_images);
+	cout << "Final error rate on training data: " << test_error_rate << endl;
+
+	// Free memory
+	for (int i = 0; i < training_images.size(); i++) {
+		delete training_images[i];
 	}
+
+	delete network;
+
+	return 0;
+}
+
+NeuralNetwork *train(vector <Image *> training_images) {
+	NeuralNetwork *network = new NeuralNetwork(784, 200, 1, 10);
 
 	double error_rate = getErrorRate(network, training_images);
 	cout << "Initial error rate: " << error_rate << endl;
@@ -65,16 +97,7 @@ int main(int argc, char **argv) {
 
 	cout << "Final error rate: " << error_rate << endl;
 
-
-	// Free memory
-
-	for (int i = 0; i < training_images.size(); i++) {
-		delete training_images[i];
-	}
-
-	delete network;
-
-	return 0;
+	return network;
 }
 
 

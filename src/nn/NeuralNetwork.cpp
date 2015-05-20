@@ -35,8 +35,6 @@ NeuralNetwork::NeuralNetwork(std::string file_name) {
 	// Initialize the network
 	init(num_input_neurons, num_hidden_neurons, num_hidden_layers, num_output_neurons);
 
-	cout << "Size: " << network[1].size() << endl;
-
 	int floats_read = 0;
 
 	// Get the weights of the hidden layer
@@ -62,8 +60,6 @@ NeuralNetwork::NeuralNetwork(std::string file_name) {
 		}
 		network[num_hidden_layers + 1][i]->setWeights(weights);
 	}
-
-	cout << "Read: " << floats_read << endl;
 
 	in.close();
 
