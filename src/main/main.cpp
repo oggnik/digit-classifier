@@ -11,11 +11,11 @@ int main(int argc, char **argv) {
 
 	cout << "Loading training set" << endl;
 
-	// string training_image_file = "../data/train-images-idx3-ubyte";
-	// string training_label_file = "../data/train-labels-idx1-ubyte";
+	string training_image_file = "../data/train-images-idx3-ubyte";
+	string training_label_file = "../data/train-labels-idx1-ubyte";
 
-	string training_image_file = "../data/t10k-images-idx3-ubyte";
-	string training_label_file = "../data/t10k-labels-idx1-ubyte";
+	// string training_image_file = "../data/t10k-images-idx3-ubyte";
+	// string training_label_file = "../data/t10k-labels-idx1-ubyte";
 
 	vector <Image *> training_images = read_dataset(training_image_file, training_label_file);
 
@@ -53,6 +53,7 @@ int main(int argc, char **argv) {
 			network->trainNetwork(expectedOutput, image->getImageAsScaledVector());
 		}
 		error_rate = getErrorRate(network, training_images);
+		network->saveToFile("testout");
 		iterations++;
 	}
 

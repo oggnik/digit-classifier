@@ -72,6 +72,14 @@ NeuralNetwork::NeuralNetwork(int num_input_neurons, int num_hidden_neurons, int 
 }
 
 /**
+ * Constructor from a save
+ */
+NeuralNetwork::NeuralNetwork(std::string file_name) {
+
+}
+
+
+/**
  * Deconstructor
  */
 NeuralNetwork::~NeuralNetwork() {
@@ -128,6 +136,54 @@ void NeuralNetwork::trainNetwork(vector <double> expectedOutput, vector <double>
 			}
 		}
 	}
+}
+
+
+/**
+ * Save the state of the network to the specified file
+ */
+void NeuralNetwork::saveToFile(std::string file_name) {
+	// -1 because of the dummy neuron
+	int num_input_neurons = network[0].size() - 1;
+	// -2 because of the input and output layers
+	int num_hidden_layers = network.size() - 2;
+	// -1 because of the dummy neuron
+	int num_hidden_neurons = network[1].size() - 1;
+	// The last layer
+	int num_output_neurons = network[network.size() - 1].size();
+
+	ofstream out;
+	out.open(file_name, ios::out);
+
+	if (!out.is_open()) {
+		cout << "Error opening output file" << endl;
+		return;
+	}
+
+	out << num_input_neurons << endl;
+	out << num_hidden_neurons << endl;
+	out << num_hidden_layers << endl;
+	out << num_output_neurons << endl;
+
+	// Get the weights of the hidden layer
+	for (int i = 1; i < network.size() - 1; i++) {
+		for (int j = 0; j < network[i].size() - 1; j++) {
+			vector <double> weights = network[i][j]->getWeights();
+			for (int k = 0; k < weights.size(); k++) {
+				out << weights[k] << endl;
+			}
+		}
+	}
+
+	// Get the weights of the output layer
+	for (int i = 0; i < num_output_neurons; i++) {
+		vector <double> weights = network[num_hidden_layers + 1][i]->getWeights();
+		for (int j = 0; j < weights.size(); j++) {
+			out << weights[j] << endl;
+		}
+	}
+
+	out.close();
 }
 
 
