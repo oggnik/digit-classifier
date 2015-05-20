@@ -54,13 +54,19 @@ int main(int argc, char **argv) {
 	// }
 
 	// Test against the test data
+	cout << "Loading testing set" << endl;
 	vector <Image *> test_images = read_dataset(test_image_file, test_label_file);
+	cout << "Testing network" << endl;
 	double test_error_rate = getErrorRate(network, test_images);
 	cout << "Final error rate on test data: " << test_error_rate << endl;
 
 	// Free memory
 	for (int i = 0; i < training_images.size(); i++) {
 		delete training_images[i];
+	}
+
+	for (int i = 0; i < test_images.size(); i++) {
+		delete test_images[i];
 	}
 
 	delete network;
