@@ -1,4 +1,4 @@
-CFLAGS = -g -std=c++11 -O1
+CFLAGS = -g -std=c++11 -O1 -Wall
 export CFLAGS
 
 OBJ_FILES = main.o Reader.o Image.o NeuralNetwork.o Neuron.o HiddenNeuron.o InputNeuron.o OutputNeuron.o DummyNeuron.o

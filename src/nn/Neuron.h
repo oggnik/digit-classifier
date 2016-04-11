@@ -28,7 +28,7 @@ class Neuron {
 		 * Get the neuron's value
 		 * This does not update automatically, computeValue must be called to refresh the value
 		 */
-		double getValue();
+		virtual double getValue();
 
 		/**
 		 * Set the weights of the neuron
@@ -72,6 +72,7 @@ class Neuron {
 		 */
 		virtual void calculateWeights();
 
+		virtual ~Neuron() {};
 	protected:
 		std::vector <double>weights;
 		double value;
